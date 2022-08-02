@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        list = new ArrayList<>();
         getAllData();
         buttonAddData = findViewById(R.id.buttonAddData);
         edt_name = findViewById(R.id.editText);
@@ -36,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        list = new ArrayList<>();
+
         customAdapter = new CustomAdapter(this,list);
         recyclerView.setAdapter(customAdapter);
         buttonAddData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PayInForm payInForm = new PayInForm(String.valueOf(list.size()) , edt_name.getText().toString());
+                list.add(payInForm);
+                customAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
       for (int i = 0; i < 10; i++) {
           PayInForm payInForm = new PayInForm(String.valueOf(i) , "person" + i);
           list.add(payInForm);
+
       }
     }
 
